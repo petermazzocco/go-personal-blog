@@ -154,7 +154,7 @@ func NotFound() templ.Component {
 	})
 }
 
-func SignUp() templ.Component {
+func NotAuthorized() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -187,7 +187,7 @@ func SignUp() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<h2>Sign Up</h2><form hx-post=\"/signup\" hx-swap=\"outerHTML\"><div class=\"form-group\"><label for=\"email\">Email</label> <input type=\"email\" id=\"email\" name=\"email\" placeholder=\"Enter your email\" required></div><div class=\"form-group\"><label for=\"password\">Password</label> <input type=\"password\" id=\"password\" name=\"password\" placeholder=\"Enter your password\" required></div><button type=\"submit\">Sign Up</button><div id=\"error-message\" class=\"error\"></div></form><div>Already have an account? <a href=\"/signin\">Sign In</a></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<div>You are not authorized to access this page</div><a href=\"/signin\">Sign In</a>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -201,7 +201,7 @@ func SignUp() templ.Component {
 	})
 }
 
-func SignIn() templ.Component {
+func SignUp() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -234,13 +234,60 @@ func SignIn() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<h2>Sign In</h2><form hx-post=\"/signin\" hx-swap=\"outerHTML\"><div class=\"form-group\"><label for=\"email\">Email</label> <input type=\"email\" id=\"email\" name=\"email\" placeholder=\"Enter your email\" required></div><div class=\"form-group\"><label for=\"password\">Password</label> <input type=\"password\" id=\"password\" name=\"password\" placeholder=\"Enter your password\" required></div><button type=\"submit\">Sign In</button><div id=\"error-message\" class=\"error\"></div></form><div>Don't have an account? <a href=\"/signup\">Sign Up</a></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<h2>Sign Up</h2><form hx-post=\"/signup\" hx-swap=\"outerHTML\"><div class=\"form-group\"><label for=\"email\">Email</label> <input type=\"email\" id=\"email\" name=\"email\" placeholder=\"Enter your email\" required></div><div class=\"form-group\"><label for=\"password\">Password</label> <input type=\"password\" id=\"password\" name=\"password\" placeholder=\"Enter your password\" required></div><button type=\"submit\">Sign Up</button><div id=\"error-message\" class=\"error\"></div></form><div>Already have an account? <a href=\"/signin\">Sign In</a></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
 		templ_7745c5c3_Err = Base().Render(templ.WithChildren(ctx, templ_7745c5c3_Var9), templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func SignIn() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var10 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var10 == nil {
+			templ_7745c5c3_Var10 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Var11 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+			if !templ_7745c5c3_IsBuffer {
+				defer func() {
+					templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err == nil {
+						templ_7745c5c3_Err = templ_7745c5c3_BufErr
+					}
+				}()
+			}
+			ctx = templ.InitializeContext(ctx)
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<h2>Sign In</h2><form hx-post=\"/signin\" hx-swap=\"outerHTML\" id=\"signin-form\"><div class=\"form-group\"><label for=\"email\">Email</label> <input type=\"email\" id=\"email\" name=\"email\" placeholder=\"Enter your email\" required></div><div class=\"form-group\"><label for=\"password\">Password</label> <input type=\"password\" id=\"password\" name=\"password\" placeholder=\"Enter your password\" required></div><button type=\"submit\">Sign In</button><div id=\"error-message\" class=\"error\"></div></form><div>Don't have an account? <a href=\"/signup\">Sign Up</a></div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			return nil
+		})
+		templ_7745c5c3_Err = Base().Render(templ.WithChildren(ctx, templ_7745c5c3_Var11), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -264,12 +311,12 @@ func SignupSuccess() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var10 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var10 == nil {
-			templ_7745c5c3_Var10 = templ.NopComponent
+		templ_7745c5c3_Var12 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var12 == nil {
+			templ_7745c5c3_Var12 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div><h3>Registration Successful!</h3><p>You can now <a href=\"/signin\">sign in</a> with your credentials.</p></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div hx-swap=\"innerHTML\" get=\"/signup\"><h3>Registration Successful!</h3><p>You can now <a href=\"/signin\">sign in</a> with your credentials.</p></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -293,25 +340,25 @@ func SigninSuccess(username string) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var11 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var11 == nil {
-			templ_7745c5c3_Var11 = templ.NopComponent
+		templ_7745c5c3_Var13 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var13 == nil {
+			templ_7745c5c3_Var13 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "<div><h3>Welcome back, ")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<div hx-swap=\"innerHTML\" get=\"/signin\"><h3>Welcome back, ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var12 string
-		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(username)
+		var templ_7745c5c3_Var14 string
+		templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(username)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/views.templ`, Line: 104, Col: 30}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/views.templ`, Line: 111, Col: 30}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "!</h3><p>You are now signed in.</p><a href=\"/\">Go to Homepage</a></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "!</h3><p>You are now signed in.</p><a href=\"/authenticated/new\">Create a New Blog Post</a></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -335,25 +382,25 @@ func AuthError(message string) templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var13 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var13 == nil {
-			templ_7745c5c3_Var13 = templ.NopComponent
+		templ_7745c5c3_Var15 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var15 == nil {
+			templ_7745c5c3_Var15 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div class=\"error\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div class=\"error\" hx-swap=\"innerHTML\" get=\"/signin\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var14 string
-		templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(message)
+		var templ_7745c5c3_Var16 string
+		templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(message)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/views.templ`, Line: 112, Col: 11}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/views.templ`, Line: 119, Col: 11}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -362,53 +409,6 @@ func AuthError(message string) templ.Component {
 }
 
 func NewPost() templ.Component {
-	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
-		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
-		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
-			return templ_7745c5c3_CtxErr
-		}
-		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
-		if !templ_7745c5c3_IsBuffer {
-			defer func() {
-				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
-				if templ_7745c5c3_Err == nil {
-					templ_7745c5c3_Err = templ_7745c5c3_BufErr
-				}
-			}()
-		}
-		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var15 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var15 == nil {
-			templ_7745c5c3_Var15 = templ.NopComponent
-		}
-		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Var16 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
-			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
-			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
-			if !templ_7745c5c3_IsBuffer {
-				defer func() {
-					templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
-					if templ_7745c5c3_Err == nil {
-						templ_7745c5c3_Err = templ_7745c5c3_BufErr
-					}
-				}()
-			}
-			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<h2>New Post</h2><form hx-post=\"/new\" hx-swap=\"outerHTML\"><div class=\"form-group\"><label for=\"title\">Title</label> <input type=\"text\" id=\"title\" name=\"title\" placeholder=\"Enter your title\" required></div><div class=\"form-group\"><label for=\"content\">Content</label> <textarea id=\"content\" name=\"content\" placeholder=\"Enter your content\" required></textarea></div><button type=\"submit\">Create Post</button><div id=\"error-message\" class=\"error\"></div></form>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			return nil
-		})
-		templ_7745c5c3_Err = Base().Render(templ.WithChildren(ctx, templ_7745c5c3_Var16), templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		return nil
-	})
-}
-
-func ViewPost() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -441,7 +441,7 @@ func ViewPost() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<h2>View Post</h2><form hx-post=\"/view/:id\" hx-swap=\"outerHTML\"><div class=\"form-group\"><label for=\"title\">Title</label> <input type=\"text\" id=\"title\" name=\"title\" placeholder=\"Enter your title\" required></div><div class=\"form-group\"><label for=\"content\">Content</label> <textarea id=\"content\" name=\"content\" placeholder=\"Enter your content\" required></textarea></div><button type=\"submit\">View Post</button><div id=\"error-message\" class=\"error\"></div></form>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<h2>New Post</h2><form hx-post=\"/new\" hx-swap=\"outerHTML\"><div class=\"form-group\"><label for=\"title\">Title</label> <input type=\"text\" id=\"title\" name=\"title\" placeholder=\"Enter your title\" required></div><div class=\"form-group\"><label for=\"content\">Content</label> <textarea id=\"content\" name=\"content\" placeholder=\"Enter your content\" required></textarea></div><button type=\"submit\">Create Post</button><div id=\"error-message\" class=\"error\"></div></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -455,7 +455,7 @@ func ViewPost() templ.Component {
 	})
 }
 
-func EditPost() templ.Component {
+func ViewPost() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -488,7 +488,7 @@ func EditPost() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<h2>Edit Post</h2><form hx-post=\"/edit/:id\" hx-swap=\"outerHTML\"><div class=\"form-group\"><label for=\"title\">Title</label> <input type=\"text\" id=\"title\" name=\"title\" placeholder=\"Enter your title\" required></div><div class=\"form-group\"><label for=\"content\">Content</label> <textarea id=\"content\" name=\"content\" placeholder=\"Enter your content\" required></textarea></div><button type=\"submit\">Edit Post</button><div id=\"error-message\" class=\"error\"></div></form>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<h2>View Post</h2><form hx-post=\"/view/:id\" hx-swap=\"outerHTML\"><div class=\"form-group\"><label for=\"title\">Title</label> <input type=\"text\" id=\"title\" name=\"title\" placeholder=\"Enter your title\" required></div><div class=\"form-group\"><label for=\"content\">Content</label> <textarea id=\"content\" name=\"content\" placeholder=\"Enter your content\" required></textarea></div><button type=\"submit\">View Post</button><div id=\"error-message\" class=\"error\"></div></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -502,7 +502,7 @@ func EditPost() templ.Component {
 	})
 }
 
-func AdminPortal() templ.Component {
+func EditPost() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -535,13 +535,60 @@ func AdminPortal() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "<h2>Admin Portal</h2><form hx-post=\"/admin\" hx-swap=\"outerHTML\"><div class=\"form-group\"><label for=\"title\">Title</label> <input type=\"text\" id=\"title\" name=\"title\" placeholder=\"Enter your title\" required></div><div class=\"form-group\"><label for=\"content\">Content</label> <textarea id=\"content\" name=\"content\" placeholder=\"Enter your content\" required></textarea></div><button type=\"submit\">Create Post</button><div id=\"error-message\" class=\"error\"></div></form>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "<h2>Edit Post</h2><form hx-post=\"/edit/:id\" hx-swap=\"outerHTML\"><div class=\"form-group\"><label for=\"title\">Title</label> <input type=\"text\" id=\"title\" name=\"title\" placeholder=\"Enter your title\" required></div><div class=\"form-group\"><label for=\"content\">Content</label> <textarea id=\"content\" name=\"content\" placeholder=\"Enter your content\" required></textarea></div><button type=\"submit\">Edit Post</button><div id=\"error-message\" class=\"error\"></div></form>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			return nil
 		})
 		templ_7745c5c3_Err = Base().Render(templ.WithChildren(ctx, templ_7745c5c3_Var22), templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func AdminPortal() templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var23 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var23 == nil {
+			templ_7745c5c3_Var23 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Var24 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+			if !templ_7745c5c3_IsBuffer {
+				defer func() {
+					templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err == nil {
+						templ_7745c5c3_Err = templ_7745c5c3_BufErr
+					}
+				}()
+			}
+			ctx = templ.InitializeContext(ctx)
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "<h2>Admin Portal</h2><form hx-post=\"/admin\" hx-swap=\"outerHTML\"><div class=\"form-group\"><label for=\"title\">Title</label> <input type=\"text\" id=\"title\" name=\"title\" placeholder=\"Enter your title\" required></div><div class=\"form-group\"><label for=\"content\">Content</label> <textarea id=\"content\" name=\"content\" placeholder=\"Enter your content\" required></textarea></div><button type=\"submit\">Create Post</button><div id=\"error-message\" class=\"error\"></div></form>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			return nil
+		})
+		templ_7745c5c3_Err = Base().Render(templ.WithChildren(ctx, templ_7745c5c3_Var24), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

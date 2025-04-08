@@ -12,12 +12,9 @@ import (
 )
 
 func SignUpWithCredentials(c *gin.Context) {
+	email := c.PostForm("email")
+	password := c.PostForm("password")
 	var user models.User
-	if err := c.ShouldBindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
-		return
-	}
-
 	// Generate a salt for the user
 	salt, err := helpers.GenerateSalt()
 	if err != nil {
@@ -26,16 +23,17 @@ func SignUpWithCredentials(c *gin.Context) {
 	}
 
 	// Hash the password
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error hashing password"})
 		return
 	}
-	user.Password = string(hashedPassword)
+	password = string(hashedPassword)
 
 	// Store salt in database
 	user.Salt = helpers.EncodeToBase64(salt)
-
+	user.Email = email
+	user.Password = password
 	// Save user to DB
 	if err := initializers.DB.Create(&user).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error creating user"})
@@ -45,5 +43,4 @@ func SignUpWithCredentials(c *gin.Context) {
 	// Return a success message using HTMX
 	views.SignupSuccess().Render(c.Request.Context(), c.Writer)
 
-	c.JSON(http.StatusOK, gin.H{"message": "User created successfully"})
 }

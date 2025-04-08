@@ -23,6 +23,12 @@ button {
     border: none;
     cursor: pointer;
 }
+textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    min-height: 300px;
+}
 .error {
     color: red;
     margin-top: 5px;

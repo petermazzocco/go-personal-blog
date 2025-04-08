@@ -45,10 +45,10 @@ func main() {
 	r.POST("/signup", auth.SignUpWithCredentials)
 
 	// Protected API Routes
-	api := r.Group("/api")
+	api := r.Group("/authenticated")
 	api.Use(auth.Middleware())
 	{
-		// Create a new post
+		// New page
 		api.GET("/new", func(c *gin.Context) {
 			views.NewPost().Render(c.Request.Context(), c.Writer)
 		})
@@ -58,7 +58,7 @@ func main() {
 			})
 		})
 
-		// View or edit a post
+		// View or edit a post page
 		api.GET("/post/:id", func(c *gin.Context) {
 			views.ViewPost().Render(c.Request.Context(), c.Writer)
 		})

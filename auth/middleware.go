@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"net/http"
 	"personal-blog/helpers"
+	"personal-blog/views"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -31,10 +31,7 @@ func Middleware() gin.HandlerFunc {
 		// If no token found
 		if tokenString == "" {
 			// Return a specific status code and clear message
-			c.JSON(http.StatusUnauthorized, gin.H{
-				"status":  "unauthorized",
-				"message": "Authentication required",
-			})
+			views.NotAuthorized().Render(c.Request.Context(), c.Writer)
 			c.Abort()
 			return
 		}
@@ -43,10 +40,7 @@ func Middleware() gin.HandlerFunc {
 		claims, err := ValidateJWT(tokenString)
 		if err != nil {
 			// For expired tokens, give a specific message
-			c.JSON(http.StatusUnauthorized, gin.H{
-				"status":  "token_expired",
-				"message": "Your session has expired, please login again",
-			})
+			views.NotAuthorized().Render(c.Request.Context(), c.Writer)
 			c.Abort()
 			return
 		}
@@ -55,7 +49,7 @@ func Middleware() gin.HandlerFunc {
 		binaryKey, err := helpers.DecodeFromBase64(encodedKey)
 
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Unknown error occured with the binary key"})
+			views.NotAuthorized().Render(c.Request.Context(), c.Writer)
 		}
 		// Set user ID in context for use in handlers
 		c.Set("userID", claims["sub"])

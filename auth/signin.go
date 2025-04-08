@@ -15,25 +15,19 @@ import (
 
 func SignInWithCredentials(c *gin.Context) {
 	// Get request data
-	var request struct {
-		Email    string `validate:"required,email"`
-		Password string `validate:"required,password"`
-	}
-	if err := c.BindJSON(&request); err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
-		return
-	}
+	email := c.PostForm("email")
+	password := c.PostForm("password")
 
 	// Find user in DB
 	var user models.User
-	if err := initializers.DB.Where("email = ?", request.Email).First(&user).Error; err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
+	if err := initializers.DB.Where("email = ?", email).First(&user).Error; err != nil {
+		views.AuthError("Invalid username or password").Render(c.Request.Context(), c.Writer)
 		return
 	}
 
 	// Compare stored hashed password with the given password
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(request.Password)); err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
+		views.AuthError("Invalid username or password").Render(c.Request.Context(), c.Writer)
 		return
 	}
 
@@ -45,7 +39,7 @@ func SignInWithCredentials(c *gin.Context) {
 	}
 
 	// Derive the encryption key
-	encryptionKey := helpers.DeriveKey(request.Password, salt)
+	encryptionKey := helpers.DeriveKey(password, salt)
 	encodedKey := helpers.EncodeToBase64(encryptionKey)
 	// Generate a session token (JWT)
 	token, err := GenerateJWT(strconv.FormatUint(uint64(user.ID), 10), encodedKey)
@@ -67,9 +61,4 @@ func SignInWithCredentials(c *gin.Context) {
 
 	// Return success response using HTMX
 	views.SigninSuccess(user.Email).Render(c.Request.Context(), c.Writer)
-
-	// Return encryption key (Base64-encoded) alongside the token
-	c.JSON(http.StatusOK, gin.H{
-		"user": user,
-	})
 }
