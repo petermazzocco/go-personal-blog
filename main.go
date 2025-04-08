@@ -53,9 +53,7 @@ func main() {
 			views.NewPost().Render(c.Request.Context(), c.Writer)
 		})
 		api.POST("/new", func(c *gin.Context) {
-			c.JSON(http.StatusOK, gin.H{
-				"message": "Created message",
-			})
+			views.SuccessNewPost().Render(c.Request.Context(), c.Writer)
 		})
 
 		// View or edit a post page
