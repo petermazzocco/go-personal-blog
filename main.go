@@ -73,13 +73,13 @@ func main() {
 			// Query the user in the db to verify the user is actually in the database
 			var user models.User
 			if err := initializers.DB.First(&user, userID).Error; err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{"error": "User does not exist"})
+				views.NewPostError("Error occured while creating the post. Try again").Render(c.Request.Context(), c.Writer)
 				return
 			}
 
 			// Implement logic to create a new post
 			post := models.Post{Title: title, Content: content}
-			result := initializers.DB.Create(&post).Error; err != nil {
+			if err := initializers.DB.Create(&post).Error; err != nil {
 				views.NewPostError("Error occured while creating the post. Try again").Render(c.Request.Context(), c.Writer)
 				return
 			}
