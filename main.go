@@ -4,8 +4,10 @@ import (
 	"net/http"
 	"personal-blog/auth"
 	"personal-blog/initializers"
+	"personal-blog/models"
 	"personal-blog/renderer"
 	"personal-blog/views"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,6 +18,7 @@ func init() {
 }
 
 func main() {
+	// Instantiate gin router, loading html and renderer
 	r := gin.Default()
 	r.LoadHTMLFiles("views/*.html")
 	htmlRenderer := r.HTMLRender
@@ -32,7 +35,7 @@ func main() {
 		views.Index().Render(c.Request.Context(), c.Writer)
 	})
 
-	// Auth pages
+	// Auth Pages
 	r.GET("/signup", func(c *gin.Context) {
 		views.SignUp().Render(c.Request.Context(), c.Writer)
 	})
@@ -40,7 +43,7 @@ func main() {
 		views.SignIn().Render(c.Request.Context(), c.Writer)
 	})
 
-	// User Authentication
+	// User Authentication Routes
 	r.POST("/signin", auth.SignInWithCredentials)
 	r.POST("/signup", auth.SignUpWithCredentials)
 
@@ -48,18 +51,48 @@ func main() {
 	api := r.Group("/authenticated")
 	api.Use(auth.Middleware())
 	{
-		// New page
+		// New post page
 		api.GET("/new", func(c *gin.Context) {
 			views.NewPost().Render(c.Request.Context(), c.Writer)
 		})
+		// New post route
 		api.POST("/new", func(c *gin.Context) {
+			//Get form values
+			title := c.PostForm("title")
+			content := c.PostForm("content")
+
+			// Get user id from cookie
+			userIDValue, exists := c.Get("userId")
+			if !exists {
+				views.NewPostError("Error occured while creating the post. Try again").Render(c.Request.Context(), c.Writer)
+				return
+			}
+			userIDStr := userIDValue.(string)
+			userID, _ := strconv.ParseUint(userIDStr, 10, 64)
+
+			// Query the user in the db to verify the user is actually in the database
+			var user models.User
+			if err := initializers.DB.First(&user, userID).Error; err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "User does not exist"})
+				return
+			}
+
+			// Implement logic to create a new post
+			post := models.Post{Title: title, Content: content}
+			result := initializers.DB.Create(&post).Error; err != nil {
+				views.NewPostError("Error occured while creating the post. Try again").Render(c.Request.Context(), c.Writer)
+				return
+			}
+
+			// Swap inner html
 			views.SuccessNewPost().Render(c.Request.Context(), c.Writer)
 		})
 
-		// View or edit a post page
+		// View a post page
 		api.GET("/post/:id", func(c *gin.Context) {
 			views.ViewPost().Render(c.Request.Context(), c.Writer)
 		})
+		// Edit a post route
 		api.POST("/post/:id", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{
 				"message": "Updated message",

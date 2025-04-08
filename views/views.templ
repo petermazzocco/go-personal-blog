@@ -106,6 +106,12 @@ templ AuthError(message string) {
 	</div>
 }
 
+templ NewPostError(message string) {
+	<div class="error" hx-swap="innerHTML" get="/authenticated/new">
+		{ message }
+	</div>
+}
+
 templ NewPost() {
 	@Base() {
 		<h2>New Post</h2>

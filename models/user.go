@@ -10,4 +10,5 @@ type User struct {
 	Password string
 	Name     string
 	Salt     string
+	Posts    []Post
 }
