@@ -3,6 +3,7 @@ package initializers
 import (
 	"log"
 	"os"
+	"personal-blog/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -19,7 +20,7 @@ func InitDB() {
 	}
 
 	// Auto migrate models
-	db.AutoMigrate()
+	db.AutoMigrate(&models.User{}, &models.Post{})
 
 	// Set global variable
 	DB = db
