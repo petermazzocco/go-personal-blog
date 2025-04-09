@@ -28,7 +28,8 @@ templ Index() {
 	@Base() {
 		<div>Welcome to your personal blog</div>
 		<div>
-			<a href="/signup">Sign Up</a> |
+			<a href="/signup">Sign Up</a>
+			|
 			<a href="/signin">Sign In</a>
 		</div>
 	}
@@ -140,6 +141,9 @@ templ SuccessNewPost() {
 	<div class="success" hx-get="/authenticated/new" hx-swap="innerHTML">
 		<h2>Success</h2>
 		<p>Your post has been created successfully.</p>
+		<a href="/authenticated/posts">
+			View Posts
+		</a>
 	</div>
 }
 
