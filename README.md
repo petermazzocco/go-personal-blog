@@ -2,11 +2,11 @@
 
 For [roadmap.sh's Personal Blog Project](https://roadmap.sh/projects/personal-blog)
 
-# Installation and Setup
+## Installation and Setup
 
-```bash
 # Clone the repository
-git clone https://github.com/petermazzocco/personal-blog.git
+```bash
+git clone https://github.com/petermazzocco/go-personal-blog.git
 ```
 
 # Navigate to the project directory
