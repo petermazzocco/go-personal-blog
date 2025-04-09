@@ -1,5 +1,10 @@
 package views
 
+import (
+	"fmt"
+	"personal-blog/models"
+)
+
 // Base wrapper template
 templ Base() {
 	<!DOCTYPE html>
@@ -48,6 +53,10 @@ templ SignUp() {
 		<h2>Sign Up</h2>
 		<form hx-post="/signup" hx-swap="outerHTML">
 			<div class="form-group">
+				<label for="name">Name</label>
+				<input type="text" id="name" name="name" placeholder="Enter your name" required/>
+			</div>
+			<div class="form-group">
 				<label for="email">Email</label>
 				<input type="email" id="email" name="email" placeholder="Enter your email" required/>
 			</div>
@@ -58,9 +67,6 @@ templ SignUp() {
 			<button type="submit">Sign Up</button>
 			<div id="error-message" class="error"></div>
 		</form>
-		<div>
-			Already have an account? <a href="/signin">Sign In</a>
-		</div>
 	}
 }
 
@@ -79,9 +85,6 @@ templ SignIn() {
 			<button type="submit">Sign In</button>
 			<div id="error-message" class="error"></div>
 		</form>
-		<div>
-			Don't have an account? <a href="/signup">Sign Up</a>
-		</div>
 	}
 }
 
@@ -96,7 +99,10 @@ templ SigninSuccess(username string) {
 	<div hx-swap="innerHTML" get="/signin">
 		<h3>Welcome back, { username }!</h3>
 		<p>You are now signed in.</p>
-		<a href="/authenticated/new">Create a New Blog Post</a>
+		<div class="footer-links">
+			<a href="/authenticated/new">Create a New Blog Post</a>
+			<a href="/authenticated/posts">View Your Posts</a>
+		</div>
 	</div>
 }
 
@@ -137,21 +143,36 @@ templ SuccessNewPost() {
 	</div>
 }
 
-templ ViewPost() {
+templ ViewPost(post models.Post) {
 	@Base() {
 		<h2>View Post</h2>
 		<form hx-post="/view/:id" hx-swap="outerHTML">
 			<div class="form-group">
-				<label for="title">Title</label>
-				<input type="text" id="title" name="title" placeholder="Enter your title" required/>
+				<h2 for="title">{ post.Title }</h2>
 			</div>
 			<div class="form-group">
-				<label for="content">Content</label>
-				<textarea id="content" name="content" placeholder="Enter your content" required></textarea>
+				<p for="content">{ post.Content }</p>
 			</div>
-			<button type="submit">View Post</button>
 			<div id="error-message" class="error"></div>
 		</form>
+	}
+}
+
+templ ViewPosts(posts []models.Post) {
+	@Base() {
+		<h2>View Posts</h2>
+		if len(posts) == 0 {
+			<p>No posts found.</p>
+			<a href="/authenticated/new">Create a new post</a>
+		} else {
+			<ul>
+				for _, post := range posts {
+					<li>
+						<a href={ templ.SafeURL("/authenticated/posts/" + fmt.Sprint(post.ID)) }>{ post.Title }</a>
+					</li>
+				}
+			</ul>
+		}
 	}
 }
 

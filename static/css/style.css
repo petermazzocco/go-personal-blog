@@ -33,3 +33,10 @@ textarea {
     color: red;
     margin-top: 5px;
 }
+
+#footer-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}

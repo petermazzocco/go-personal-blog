@@ -12,6 +12,7 @@ import (
 )
 
 func SignUpWithCredentials(c *gin.Context) {
+	name := c.PostForm("name")
 	email := c.PostForm("email")
 	password := c.PostForm("password")
 	var user models.User
@@ -34,6 +35,7 @@ func SignUpWithCredentials(c *gin.Context) {
 	user.Salt = helpers.EncodeToBase64(salt)
 	user.Email = email
 	user.Password = password
+	user.Name = name
 	// Save user to DB
 	if err := initializers.DB.Create(&user).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error creating user"})

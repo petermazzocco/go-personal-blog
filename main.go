@@ -1,7 +1,7 @@
 package main
 
 import (
-	"net/http"
+	"fmt"
 	"personal-blog/auth"
 	"personal-blog/initializers"
 	"personal-blog/models"
@@ -62,8 +62,9 @@ func main() {
 			content := c.PostForm("content")
 
 			// Get user id from cookie
-			userIDValue, exists := c.Get("userId")
+			userIDValue, exists := c.Get("userID")
 			if !exists {
+				fmt.Println("UserID is not found")
 				views.NewPostError("Error occured while creating the post. Try again").Render(c.Request.Context(), c.Writer)
 				return
 			}
@@ -73,13 +74,15 @@ func main() {
 			// Query the user in the db to verify the user is actually in the database
 			var user models.User
 			if err := initializers.DB.First(&user, userID).Error; err != nil {
+				fmt.Println("Error occured querying db for user", err.Error())
 				views.NewPostError("Error occured while creating the post. Try again").Render(c.Request.Context(), c.Writer)
 				return
 			}
 
 			// Implement logic to create a new post
-			post := models.Post{Title: title, Content: content}
+			post := models.Post{Title: title, Content: content, UserID: uint(userID)}
 			if err := initializers.DB.Create(&post).Error; err != nil {
+				fmt.Println("Error occured creating post", err.Error())
 				views.NewPostError("Error occured while creating the post. Try again").Render(c.Request.Context(), c.Writer)
 				return
 			}
@@ -88,21 +91,53 @@ func main() {
 			views.SuccessNewPost().Render(c.Request.Context(), c.Writer)
 		})
 
-		// View a post page
-		api.GET("/post/:id", func(c *gin.Context) {
-			views.ViewPost().Render(c.Request.Context(), c.Writer)
-		})
-		// Edit a post route
-		api.POST("/post/:id", func(c *gin.Context) {
-			c.JSON(http.StatusOK, gin.H{
-				"message": "Updated message",
-			})
+		// View all posts
+		api.GET("/posts", func(c *gin.Context) {
+			var posts []models.Post
+			if err := initializers.DB.Find(&posts).Error; err != nil {
+				fmt.Println("Error occured querying db for posts", err.Error())
+				views.NewPostError("Error occured while fetching the posts. Try again").Render(c.Request.Context(), c.Writer)
+				return
+			}
+			views.ViewPosts(posts).Render(c.Request.Context(), c.Writer)
 		})
 
-		// Admin portal
-		api.GET("/admin", func(c *gin.Context) {
-			views.AdminPortal().Render(c.Request.Context(), c.Writer)
+		// View a post page
+		api.GET("/posts/:id", func(c *gin.Context) {
+			var post models.Post
+			id := c.Param("id")
+			if err := initializers.DB.First(&post, id).Error; err != nil {
+				fmt.Println("Error occured querying db for post", err.Error())
+				views.NewPostError("Error occured while fetching the post. Try again").Render(c.Request.Context(), c.Writer)
+				return
+			}
+			views.ViewPost(post).Render(c.Request.Context(), c.Writer)
 		})
+		// Edit a post route
+		api.POST("/posts/:id", func(c *gin.Context) {
+			title := c.PostForm("title")
+			content := c.PostForm("content")
+
+			var post models.Post
+			id := c.Param("id")
+			if err := initializers.DB.First(&post, id).Error; err != nil {
+				fmt.Println("Error occured querying db for post", err.Error())
+				views.NewPostError("Error occured while fetching the post. Try again").Render(c.Request.Context(), c.Writer)
+				return
+			}
+
+			post.Title = title
+			post.Content = content
+
+			if err := initializers.DB.Save(&post).Error; err != nil {
+				fmt.Println("Error occured while updating the post", err.Error())
+				views.NewPostError("Error occured while updating the post. Try again").Render(c.Request.Context(), c.Writer)
+				return
+			}
+
+			views.SuccessNewPost().Render(c.Request.Context(), c.Writer)
+		})
+
 	}
 
 	r.Run(":8080")

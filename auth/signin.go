@@ -60,5 +60,5 @@ func SignInWithCredentials(c *gin.Context) {
 	)
 
 	// Return success response using HTMX
-	views.SigninSuccess(user.Email).Render(c.Request.Context(), c.Writer)
+	views.SigninSuccess(user.Name).Render(c.Request.Context(), c.Writer)
 }
