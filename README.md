@@ -1,10 +1,36 @@
-## TODO
+## Personal Blog
 
-[x] Install and set up Templ, gin, and GORM
-[x] Add postgres connection
-[ ] Create HTTP server with GET, POST methods
-[ ] Add middleware with JWT authentication and logging
-[ ] Implement routes for admin, CRUD operations for posts, and viewing posts and render HTMX
-[ ] E2E encryption for posts
-[ ] Create Dockerfile and docker-compose file
-[ ] Deploy to production on Dokploy
+For [roadmap.sh's Personal Blog Project](https://roadmap.sh/projects/personal-blog)
+
+# Installation and Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/petermazzocco/personal-blog.git
+```
+
+# Navigate to the project directory
+```bash
+cd personal-blog
+```
+
+# Install packages
+```bash
+go install
+```
+
+# Create .env file
+```bash
+touch .env
+```
+Add postgresql database connection string to .env file and generate a secret key for JWT authentication.
+
+# Start the development server
+```bash
+air```
+
+or
+
+```bash
+go run main.go
+```
